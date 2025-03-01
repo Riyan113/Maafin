@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-
         .fade-blur {
             opacity: 0;
             filter: blur(10px);
@@ -38,7 +37,7 @@
     <div id="loading" class="flex items-center justify-center absolute inset-0 bg-gray-900">
         <div class="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600"></div>
     </div>
-    
+
     <div id="halaman0" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
         <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Selamat Datang!</h1>
         <p class="text-yellow-300 text-lg mb-4">Klik tombol di bawah untuk melanjutkan.</p>
@@ -56,7 +55,7 @@
     </div>
 
     <div id="halaman2" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
-        <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Allow <span id="namaTampil"></span>?</h1>
+        <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Allow <span id="namaTampil"></span>✨️</h1>
         <div class="flex justify-between mt-4">
             <button onclick="previous()" class="bg-gray-600 px-4 py-2 rounded">Back</button>
             <button onclick="lanjutkan()" class="bg-yellow-500 px-4 py-2 rounded">Next</button>
@@ -96,9 +95,9 @@
     </div>
 
     <div id="halaman7" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
-        <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Terima Kasih <span id="namaTampil2"></span>!</h1>
-        <p class="text-yellow-300 text-lg">Terima kasih telah membaca pesan ini. Semoga Ramadan ini membawa berkah untuk kita semua.</p>
-        <button onclick="reset()" class="mt-4 bg-yellow-500 px-4 py-2 rounded">Mulai Lagi</button>
+        <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Terima Kasih </h1>
+        <p class="text-yellow-300 text-lg">Telah membaca pesan ini. Semoga Ramadan ini membawa berkah untuk kita semua.</p>
+        <button onclick="reset()" class="mt-4 bg-yellow-500 px-4 py-2 rounded">Selesai</button>
     </div>
 
     <script>
@@ -142,7 +141,6 @@
                     return;
                 }
                 document.getElementById("namaTampil").textContent = nama;
-                document.getElementById("namaTampil2").textContent = nama;
                 showPage("halaman1", "halaman2");
                 halamanIndex++;
             } else if (halamanIndex < totalHalaman) {
