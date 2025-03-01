@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+
+        .fade-blur {
+            opacity: 0;
+            filter: blur(10px);
+            transition: opacity 0.6s ease, filter 0.6s ease;
+        }
+        .fade-blur.active {
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        .star {
+            position: fixed;
+            top: -50px;
+            width: 6px;
+            height: 6px;
+            background-color: yellow;
+            box-shadow: 0 0 10px yellow;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) translateX(-30px) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-900 text-white relative overflow-hidden">
+
+    <div id="loading" class="flex items-center justify-center absolute inset-0 bg-gray-900">
+        <div class="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600"></div>
+    </div>
+    
+    <div id="halaman0" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
+        <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Selamat Datang!</h1>
+        <p class="text-yellow-300 text-lg mb-4">Klik tombol di bawah untuk melanjutkan.</p>
+        <button onclick="lanjutkan()" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded transition hover:bg-yellow-600">
+            Lanjut
+        </button>
+    </div>
+
+    <div id="halaman1" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
+        <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Masukkan Namamu</h1>
+        <input type="text" id="namaInput" class="border p-2 rounded w-full mb-4 text-black" placeholder="Nama kamu...">
+        <button onclick="lanjutkan()" class="bg-yellow-500 text-gray-900 px-4 py-2 rounded transition hover:bg-yellow-600">
+            Lanjut
+        </button>
+    </div>
+
+    <div id="halaman2" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
+        <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Allow <span id="namaTampil"></span>?</h1>
+        <div class="flex justify-between mt-4">
+            <button onclick="previous()" class="bg-gray-600 px-4 py-2 rounded">Back</button>
+            <button onclick="lanjutkan()" class="bg-yellow-500 px-4 py-2 rounded">Next</button>
+        </div>
+    </div>
+
+    <div id="halaman3" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
+        <p class="text-yellow-300 text-lg">Di bulan yang penuh berkah ini...</p>
+        <div class="flex justify-between mt-4">
+            <button onclick="previous()" class="bg-gray-600 px-4 py-2 rounded">Back</button>
+            <button onclick="lanjutkan()" class="bg-yellow-500 px-4 py-2 rounded">Next</button>
+        </div>
+    </div>
+
+    <div id="halaman4" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
+        <p class="text-yellow-300 text-lg">Aku ingin mengucapkan maaf yang sebesar-besarnya...</p>
+        <div class="flex justify-between mt-4">
+            <button onclick="previous()" class="bg-gray-600 px-4 py-2 rounded">Back</button>
+            <button onclick="lanjutkan()" class="bg-yellow-500 px-4 py-2 rounded">Next</button>
+        </div>
+    </div>
+
+    <div id="halaman5" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
+        <p class="text-yellow-300 text-lg">Atas segala salah dan khilaf yang pernah aku lakukan...</p>
+        <div class="flex justify-between mt-4">
+            <button onclick="previous()" class="bg-gray-600 px-4 py-2 rounded">Back</button>
+            <button onclick="lanjutkan()" class="bg-yellow-500 px-4 py-2 rounded">Next</button>
+        </div>
+    </div>
+
+    <div id="halaman6" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
+        <p class="text-yellow-300 text-lg">Semoga di Ramadan ini, kita bisa menjadi pribadi yang lebih baik...</p>
+        <div class="flex justify-between mt-4">
+            <button onclick="previous()" class="bg-gray-600 px-4 py-2 rounded">Back</button>
+            <button onclick="lanjutkan()" class="bg-yellow-500 px-4 py-2 rounded">Next</button>
+        </div>
+    </div>
+
+    <div id="halaman7" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg fade-blur">
+        <h1 class="text-2xl font-semibold text-yellow-400 mb-4">Terima Kasih <span id="namaTampil2"></span>!</h1>
+        <p class="text-yellow-300 text-lg">Terima kasih telah membaca pesan ini. Semoga Ramadan ini membawa berkah untuk kita semua.</p>
+        <button onclick="reset()" class="mt-4 bg-yellow-500 px-4 py-2 rounded">Mulai Lagi</button>
+    </div>
+
+    <script>
+        window.onload = function () {
+            setTimeout(() => {
+                document.getElementById("loading").classList.add("hidden");
+                let halaman0 = document.getElementById("halaman0");
+                halaman0.classList.remove("hidden");
+                setTimeout(() => {
+                    halaman0.classList.add("active");
+                }, 50);
+            }, 2000);
+        };
+
+        let nama = "";
+        let halamanIndex = 0;
+        const totalHalaman = 7;
+
+        function showPage(hideId, showId) {
+            let hideElement = document.getElementById(hideId);
+            let showElement = document.getElementById(showId);
+
+            hideElement.classList.remove("active");
+            setTimeout(() => {
+                hideElement.classList.add("hidden");
+                showElement.classList.remove("hidden");
+                setTimeout(() => {
+                    showElement.classList.add("active");
+                }, 50);
+            }, 500);
+        }
+
+        function lanjutkan() {
+            if (halamanIndex === 0) {
+                showPage("halaman0", "halaman1");
+                halamanIndex++;
+            } else if (halamanIndex === 1) {
+                nama = document.getElementById("namaInput").value.trim();
+                if (nama === "") {
+                    alert("Silakan masukkan nama terlebih dahulu!");
+                    return;
+                }
+                document.getElementById("namaTampil").textContent = nama;
+                document.getElementById("namaTampil2").textContent = nama;
+                showPage("halaman1", "halaman2");
+                halamanIndex++;
+            } else if (halamanIndex < totalHalaman) {
+                showPage(`halaman${halamanIndex}`, `halaman${halamanIndex + 1}`);
+                halamanIndex++;
+            }
+        }
+
+        function previous() {
+            if (halamanIndex > 1) {
+                halamanIndex--;
+                showPage(`halaman${halamanIndex + 1}`, `halaman${halamanIndex}`);
+            }
+        }
+
+        function reset() {
+            location.reload();
+        }
+    </script>
+
+</body>
+</html>
